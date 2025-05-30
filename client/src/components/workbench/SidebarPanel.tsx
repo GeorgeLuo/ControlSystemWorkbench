@@ -13,7 +13,7 @@ import {
   Search,
   Plus,
   FolderOpen,
-  Function
+  Calculator as Formula
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -38,7 +38,7 @@ const toolCategories = [
     tools: [
       { id: 'scope', name: 'Oscilloscope', icon: TrendingUp, color: 'text-teal-600 bg-teal-100' },
       { id: 'bode-plot', name: 'Bode Plot', icon: BarChart3, color: 'text-indigo-600 bg-indigo-100' },
-      { id: 'formula-viewer', name: 'Formula Viewer', icon: Function, color: 'text-blue-600 bg-blue-100' },
+      { id: 'formula-viewer', name: 'Formula Viewer', icon: Formula, color: 'text-blue-600 bg-blue-100' },
     ]
   }
 ];
