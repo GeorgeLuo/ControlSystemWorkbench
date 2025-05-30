@@ -102,29 +102,8 @@ export const useWorkbenchStore = create<WorkbenchState>((set, get) => ({
   canvasZoom: 100,
   
   // Initial Window State
-  windows: [
-    {
-      id: 'scope',
-      title: 'Oscilloscope',
-      type: 'oscilloscope',
-      position: { x: 50, y: 100 },
-      size: { width: 400, height: 280 },
-      isMinimized: false,
-      isMaximized: false,
-      zIndex: 10,
-    },
-    {
-      id: 'properties',
-      title: 'Properties',
-      type: 'properties',
-      position: { x: 500, y: 100 },
-      size: { width: 300, height: 400 },
-      isMinimized: false,
-      isMaximized: false,
-      zIndex: 11,
-    }
-  ],
-  maxZIndex: 11,
+  windows: [],
+  maxZIndex: 0,
   
   // Actions
   toggleSidebar: () => set((state) => ({ 
