@@ -40,6 +40,14 @@ export interface Connection {
   targetHandle?: string;
 }
 
+export interface SimulationState {
+  isRunning: boolean;
+  currentTime: number;
+  sampleTime: number;
+  duration: number;
+  data: Record<string, number[]>;
+}
+
 export interface WorkbenchState {
   // UI State
   sidebarExpanded: boolean;
@@ -54,6 +62,9 @@ export interface WorkbenchState {
   connections: Connection[];
   selectedBlocks: string[];
   canvasZoom: number;
+  
+  // Simulation State
+  simulation: SimulationState;
   
   // Window Management
   windows: WindowState[];
@@ -84,6 +95,12 @@ export interface WorkbenchState {
   setCanvasZoom: (zoom: number) => void;
   addConnection: (connection: Omit<Connection, 'id'>) => void;
   removeConnection: (id: string) => void;
+  
+  // Simulation Actions
+  startSimulation: () => void;
+  stopSimulation: () => void;
+  updateSimulationData: (blockId: string, data: number[]) => void;
+  setSimulationTime: (time: number) => void;
 }
 
 export const useWorkbenchStore = create<WorkbenchState>((set, get) => ({
@@ -100,6 +117,15 @@ export const useWorkbenchStore = create<WorkbenchState>((set, get) => ({
   connections: [],
   selectedBlocks: [],
   canvasZoom: 100,
+  
+  // Initial Simulation State
+  simulation: {
+    isRunning: false,
+    currentTime: 0,
+    sampleTime: 0.01,
+    duration: 10,
+    data: {},
+  },
   
   // Initial Window State
   windows: [],
@@ -226,6 +252,26 @@ export const useWorkbenchStore = create<WorkbenchState>((set, get) => ({
   
   removeConnection: (id) => set((state) => ({
     connections: state.connections.filter((conn) => conn.id !== id),
+  })),
+  
+  // Simulation Actions
+  startSimulation: () => set((state) => ({
+    simulation: { ...state.simulation, isRunning: true, currentTime: 0 },
+  })),
+  
+  stopSimulation: () => set((state) => ({
+    simulation: { ...state.simulation, isRunning: false },
+  })),
+  
+  updateSimulationData: (blockId, data) => set((state) => ({
+    simulation: {
+      ...state.simulation,
+      data: { ...state.simulation.data, [blockId]: data },
+    },
+  })),
+  
+  setSimulationTime: (time) => set((state) => ({
+    simulation: { ...state.simulation, currentTime: time },
   })),
 }));
 

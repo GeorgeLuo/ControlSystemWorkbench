@@ -4,6 +4,7 @@ import SidebarPanel from '@/components/workbench/SidebarPanel';
 import CanvasWorkspace from '@/components/workbench/CanvasWorkspace';
 import FloatingWindow from '@/components/workbench/FloatingWindow';
 import StatusBar from '@/components/workbench/StatusBar';
+import SimulationEngine from '@/components/workbench/SimulationEngine';
 import Oscilloscope from '@/components/workbench/tools/Oscilloscope';
 import PropertiesPanel from '@/components/workbench/tools/PropertiesPanel';
 import { useWorkbenchStore } from '@/store/workbench';
@@ -34,6 +35,9 @@ export default function Workbench() {
             </FloatingWindow>
           ))}
         </div>
+        
+        {/* Simulation Engine - runs in background */}
+        <SimulationEngine />
       </div>
       
       <StatusBar />
