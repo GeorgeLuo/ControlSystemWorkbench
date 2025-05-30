@@ -17,13 +17,13 @@ export default function Workbench() {
   }, []);
 
   return (
-    <div className="h-screen flex flex-col bg-background text-foreground overflow-hidden">
+    <div className="h-screen w-full flex flex-col bg-background text-foreground overflow-hidden">
       <HeaderBar />
       
-      <div className="flex flex-1 relative">
+      <div className="flex flex-1 min-h-0 relative">
         <SidebarPanel />
         
-        <div className="flex-1 relative">
+        <div className="flex-1 relative min-h-0">
           <CanvasWorkspace />
           
           {/* Render floating windows */}

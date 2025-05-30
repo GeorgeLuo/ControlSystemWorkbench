@@ -129,7 +129,7 @@ export default function CanvasWorkspace() {
   return (
     <div 
       ref={canvasRef}
-      className="absolute inset-0 bg-background grid-background"
+      className="w-full h-full bg-background grid-background"
       onDrop={handleCanvasDrop}
       onDragOver={handleCanvasDragOver}
     >
