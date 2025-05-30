@@ -12,7 +12,8 @@ import {
   BarChart3,
   Search,
   Plus,
-  FolderOpen
+  FolderOpen,
+  Function
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -37,6 +38,7 @@ const toolCategories = [
     tools: [
       { id: 'scope', name: 'Oscilloscope', icon: TrendingUp, color: 'text-teal-600 bg-teal-100' },
       { id: 'bode-plot', name: 'Bode Plot', icon: BarChart3, color: 'text-indigo-600 bg-indigo-100' },
+      { id: 'formula-viewer', name: 'Formula Viewer', icon: Function, color: 'text-blue-600 bg-blue-100' },
     ]
   }
 ];
@@ -58,6 +60,8 @@ export default function SidebarPanel() {
       openWindow('oscilloscope', 'Oscilloscope');
     } else if (toolId === 'bode-plot') {
       openWindow('bode-plot', 'Bode Plot');
+    } else if (toolId === 'formula-viewer') {
+        openWindow('formula-viewer', 'Formula Viewer');
     }
   };
 
@@ -77,7 +81,7 @@ export default function SidebarPanel() {
         {/* Sidebar Header */}
         <div className="p-4 border-b border-border">
           <h2 className="text-sm font-medium text-foreground mb-3">Toolbox</h2>
-          
+
           {/* Search Tools */}
           <div className="relative">
             <Input
@@ -90,7 +94,7 @@ export default function SidebarPanel() {
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           </div>
         </div>
-        
+
         {/* Tool Categories */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {filteredCategories.map((category) => (
@@ -103,7 +107,7 @@ export default function SidebarPanel() {
                   const Icon = tool.icon;
                   const isSelected = selectedTool === tool.id;
                   const isAnalysisTool = category.name === 'Analysis Tools';
-                  
+
                   return (
                     <div
                       key={tool.id}
@@ -126,14 +130,14 @@ export default function SidebarPanel() {
             </div>
           ))}
         </div>
-        
+
         {/* Sidebar Footer */}
         <div className="p-4 border-t border-border space-y-2">
           <Button className="w-full workbench-button workbench-button-accent">
             <Plus className="h-4 w-4 mr-2" />
             New Project
           </Button>
-          
+
           <Button variant="outline" className="w-full">
             <FolderOpen className="h-4 w-4 mr-2" />
             Open Project

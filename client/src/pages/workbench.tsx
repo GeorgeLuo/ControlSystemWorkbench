@@ -6,6 +6,7 @@ import FloatingWindow from '@/components/workbench/FloatingWindow';
 import StatusBar from '@/components/workbench/StatusBar';
 import SimulationEngine from '@/components/workbench/SimulationEngine';
 import Oscilloscope from '@/components/workbench/tools/Oscilloscope';
+import FormulaViewer from '@/components/workbench/tools/FormulaViewer';
 import PropertiesPanel from '@/components/workbench/tools/PropertiesPanel';
 import { useWorkbenchStore } from '@/store/workbench';
 
@@ -31,6 +32,7 @@ export default function Workbench() {
           {windows.map((window) => (
             <FloatingWindow key={window.id} window={window}>
               {window.type === 'oscilloscope' && <Oscilloscope />}
+              {window.type === 'formula-viewer' && <FormulaViewer />}
               {window.type === 'properties' && <PropertiesPanel />}
             </FloatingWindow>
           ))}

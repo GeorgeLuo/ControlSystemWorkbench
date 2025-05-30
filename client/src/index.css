@@ -5,6 +5,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Formula display styles */
+.formula-display .fraction {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0 4px;
+}
+
+.formula-display .numerator {
+  border-bottom: 1px solid currentColor;
+  padding: 0 4px;
+  margin-bottom: 2px;
+}
+
+.formula-display .denominator {
+  padding: 0 4px;
+  margin-top: 2px;
+}
+
 :root {
   --background: 250 50% 98%; /* #FAFAFA */
   --foreground: 210 11% 15%; /* #222222 */
