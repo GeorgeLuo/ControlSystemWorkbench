@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* React Flow CSS Import */
-@import 'reactflow/dist/style.css';
-
 :root {
   --background: 250 50% 98%; /* #FAFAFA */
   --foreground: 210 11% 15%; /* #222222 */

@@ -104,27 +104,47 @@ export const useWorkbenchStore = create<WorkbenchState>((set, get) => ({
   // Initial Window State
   windows: [
     {
-      id: 'scope',
-      title: 'Oscilloscope',
-      type: 'oscilloscope',
-      position: { x: 50, y: 100 },
-      size: { width: 400, height: 280 },
+      id: 'pid-block-1',
+      title: 'PID Controller',
+      type: 'pid-controller',
+      position: { x: 100, y: 100 },
+      size: { width: 160, height: 120 },
       isMinimized: false,
       isMaximized: false,
       zIndex: 10,
     },
     {
-      id: 'properties',
-      title: 'Properties',
-      type: 'properties',
-      position: { x: 500, y: 100 },
-      size: { width: 300, height: 400 },
+      id: 'plant-block-1',
+      title: 'Plant Model',
+      type: 'transfer-function',
+      position: { x: 300, y: 100 },
+      size: { width: 160, height: 120 },
       isMinimized: false,
       isMaximized: false,
       zIndex: 11,
+    },
+    {
+      id: 'scope',
+      title: 'Oscilloscope',
+      type: 'oscilloscope',
+      position: { x: 50, y: 250 },
+      size: { width: 400, height: 280 },
+      isMinimized: false,
+      isMaximized: false,
+      zIndex: 12,
+    },
+    {
+      id: 'properties',
+      title: 'Properties',
+      type: 'properties',
+      position: { x: 500, y: 250 },
+      size: { width: 300, height: 400 },
+      isMinimized: false,
+      isMaximized: false,
+      zIndex: 13,
     }
   ],
-  maxZIndex: 11,
+  maxZIndex: 13,
   
   // Actions
   toggleSidebar: () => set((state) => ({ 
