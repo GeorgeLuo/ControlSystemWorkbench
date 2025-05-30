@@ -6,7 +6,6 @@ import FloatingWindow from '@/components/workbench/FloatingWindow';
 import StatusBar from '@/components/workbench/StatusBar';
 import Oscilloscope from '@/components/workbench/tools/Oscilloscope';
 import PropertiesPanel from '@/components/workbench/tools/PropertiesPanel';
-import ControlBlock from '@/components/workbench/tools/ControlBlock';
 import { useWorkbenchStore } from '@/store/workbench';
 
 export default function Workbench() {
@@ -32,13 +31,6 @@ export default function Workbench() {
             <FloatingWindow key={window.id} window={window}>
               {window.type === 'oscilloscope' && <Oscilloscope />}
               {window.type === 'properties' && <PropertiesPanel />}
-              {(window.type === 'pid-controller' || 
-                window.type === 'transfer-function' || 
-                window.type === 'gain-block' || 
-                window.type === 'step-input' || 
-                window.type === 'sine-wave') && (
-                <ControlBlock type={window.type} title={window.title} />
-              )}
             </FloatingWindow>
           ))}
         </div>
