@@ -92,7 +92,7 @@ export default function SidebarPanel() {
         </div>
         
         {/* Tool Categories */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-20">
           {filteredCategories.map((category) => (
             <div key={category.name}>
               <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
