@@ -19,22 +19,22 @@ import { useWorkbenchStore } from '@/store/workbench';
 // Custom node component
 function ControlBlock({ data }: { data: any }) {
   return (
-    <div className="bg-card border-2 border-border rounded-lg shadow-sm p-3 min-w-[120px] select-none relative">
+    <div className="bg-card border-2 border-border rounded shadow-sm p-2 min-w-[80px] max-w-[100px] select-none relative">
       <Handle
         type="target"
         position={Position.Left}
-        className="w-3 h-3 bg-primary border-2 border-card"
+        className="w-2 h-2 bg-primary border border-card"
       />
       
-      <div className="text-xs font-medium text-foreground text-center">{data.label}</div>
+      <div className="text-[10px] font-medium text-foreground text-center leading-tight">{data.label}</div>
       {data.subtitle && (
-        <div className="text-xs text-muted-foreground text-center mt-1">{data.subtitle}</div>
+        <div className="text-[8px] text-muted-foreground text-center mt-0.5 leading-tight">{data.subtitle}</div>
       )}
       
       <Handle
         type="source"
         position={Position.Right}
-        className="w-3 h-3 bg-primary border-2 border-card"
+        className="w-2 h-2 bg-primary border border-card"
       />
     </div>
   );
@@ -142,8 +142,15 @@ export default function CanvasWorkspace() {
         nodeTypes={nodeTypes}
         fitView
         attributionPosition="bottom-left"
+        panOnDrag
+        zoomOnScroll
+        zoomOnPinch
+        zoomOnDoubleClick
+        minZoom={0.1}
+        maxZoom={4}
+        defaultViewport={{ x: 50, y: 50, zoom: 1 }}
       >
-        <Controls className="bg-surface border border-border" />
+        <Controls className="bg-card border border-border" />
         <Background 
           variant={BackgroundVariant.Dots} 
           gap={20} 
