@@ -48,7 +48,7 @@ const initialNodes: Node[] = [
   {
     id: '1',
     type: 'controlBlock',
-    position: { x: 200, y: 150 },
+    position: { x: 100, y: 100 },
     data: { 
       label: 'PID Controller',
       subtitle: 'Kp=1, Ki=0.1, Kd=0.05'
@@ -57,7 +57,7 @@ const initialNodes: Node[] = [
   {
     id: '2',
     type: 'controlBlock',
-    position: { x: 400, y: 150 },
+    position: { x: 350, y: 100 },
     data: { 
       label: 'Plant Model',
       subtitle: '1/(s²+2s+1)'
