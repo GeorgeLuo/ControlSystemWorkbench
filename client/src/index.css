@@ -130,17 +130,26 @@
   }
 }
 
+/* React Flow CSS Import */
+@import 'reactflow/dist/style.css';
+
 /* React Flow Overrides */
 .react-flow__node {
-  @apply bg-surface border-2 border-border rounded-lg shadow-sm;
+  background-color: hsl(var(--surface));
+  border: 2px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
 
 .react-flow__node.selected {
-  @apply border-primary;
+  border-color: hsl(var(--primary));
 }
 
 .react-flow__handle {
-  @apply w-3 h-3 bg-primary border-2 border-surface;
+  width: 12px;
+  height: 12px;
+  background-color: hsl(var(--primary));
+  border: 2px solid hsl(var(--surface));
 }
 
 .react-flow__edge-path {

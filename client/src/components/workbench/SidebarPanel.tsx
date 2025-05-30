@@ -70,7 +70,7 @@ export default function SidebarPanel() {
 
   return (
     <div className={cn(
-      "bg-surface border-r border-border sidebar-transition relative z-40 overflow-hidden",
+      "bg-card border-r border-border sidebar-transition relative z-40 overflow-hidden",
       sidebarExpanded ? "w-72" : "w-0"
     )}>
       <div className="w-72 h-full flex flex-col">

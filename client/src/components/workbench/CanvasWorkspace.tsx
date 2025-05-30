@@ -11,29 +11,30 @@ import ReactFlow, {
   Connection,
   NodeTypes,
   MarkerType,
+  Handle,
+  Position,
 } from 'reactflow';
-import 'reactflow/dist/style.css';
 import { useWorkbenchStore } from '@/store/workbench';
 
 // Custom node component
 function ControlBlock({ data }: { data: any }) {
   return (
-    <div className="bg-surface border-2 border-border rounded-lg shadow-sm p-3 min-w-[120px] select-none">
+    <div className="bg-card border-2 border-border rounded-lg shadow-sm p-3 min-w-[120px] select-none relative">
+      <Handle
+        type="target"
+        position={Position.Left}
+        className="w-3 h-3 bg-primary border-2 border-card"
+      />
+      
       <div className="text-xs font-medium text-foreground text-center">{data.label}</div>
       {data.subtitle && (
         <div className="text-xs text-muted-foreground text-center mt-1">{data.subtitle}</div>
       )}
       
-      {/* Input handle */}
-      <div 
-        className="absolute left-0 top-1/2 w-3 h-3 bg-primary border-2 border-surface rounded-full transform -translate-x-1/2 -translate-y-1/2"
-        style={{ position: 'absolute' }}
-      />
-      
-      {/* Output handle */}
-      <div 
-        className="absolute right-0 top-1/2 w-3 h-3 bg-primary border-2 border-surface rounded-full transform translate-x-1/2 -translate-y-1/2"
-        style={{ position: 'absolute' }}
+      <Handle
+        type="source"
+        position={Position.Right}
+        className="w-3 h-3 bg-primary border-2 border-card"
       />
     </div>
   );

@@ -16,7 +16,7 @@ export default function HeaderBar() {
   };
 
   return (
-    <header className="bg-surface border-b border-border h-12 flex items-center justify-between px-4 relative z-50">
+    <header className="bg-card border-b border-border h-12 flex items-center justify-between px-4 relative z-50">
       <div className="flex items-center space-x-4">
         <Button
           variant="ghost"
