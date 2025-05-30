@@ -21,7 +21,7 @@ export default function StatusBar() {
   };
 
   return (
-    <div className="bg-surface border-t border-border px-4 py-1 flex items-center justify-between text-xs text-muted-foreground">
+    <div className="bg-card border-t border-border px-4 py-1 flex items-center justify-between text-xs text-muted-foreground">
       <div className="flex items-center space-x-4">
         <span>Zoom: {Math.round(canvasZoom)}%</span>
         <span>

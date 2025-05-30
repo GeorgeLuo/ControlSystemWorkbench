@@ -46,7 +46,7 @@ export default function FloatingWindow({ window, children }: FloatingWindowProps
   if (window.isMaximized) {
     return (
       <div
-        className="fixed inset-4 bg-surface rounded-lg window-shadow border border-border overflow-hidden z-50"
+        className="fixed inset-4 bg-card rounded-lg window-shadow border border-border overflow-hidden z-50"
         style={{ zIndex: window.zIndex }}
       >
         <WindowHeader window={window} />
@@ -70,7 +70,7 @@ export default function FloatingWindow({ window, children }: FloatingWindowProps
       bounds="parent"
       dragHandleClassName="drag-handle"
       className={cn(
-        "window bg-surface rounded-lg window-shadow border border-border overflow-hidden",
+        "window bg-card rounded-lg window-shadow border border-border overflow-hidden",
         window.isMinimized && "h-12"
       )}
       style={{ zIndex: window.zIndex }}
