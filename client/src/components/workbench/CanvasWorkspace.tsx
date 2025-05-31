@@ -84,11 +84,11 @@ function ControlBlock({ data }: { data: any }) {
   };
 
   return (
-    <div className="select-none relative">
+    <div className="select-none">
       <Handle
         type="target"
         position={Position.Left}
-        className="w-2 h-2 bg-primary border border-card"
+        className="w-2 h-2 bg-primary border-0"
       />
 
       {getSymbol()}
@@ -102,7 +102,7 @@ function ControlBlock({ data }: { data: any }) {
       <Handle
         type="source"
         position={Position.Right}
-        className="w-2 h-2 bg-primary border border-card"
+        className="w-2 h-2 bg-primary border-0"
       />
     </div>
   );
@@ -207,8 +207,6 @@ const initialEdges: Edge[] = [
     id: "e4-5",
     source: "4",
     target: "5",
-    sourceHandle: null,
-    targetHandle: null,
     type: "smoothstep",
     markerEnd: {
       type: MarkerType.Arrow,
@@ -223,8 +221,6 @@ const initialEdges: Edge[] = [
     id: "e5-2",
     source: "5",
     target: "2",
-    sourceHandle: null,
-    targetHandle: null,
     type: "smoothstep",
     markerEnd: {
       type: MarkerType.Arrow,
