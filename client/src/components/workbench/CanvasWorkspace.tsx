@@ -20,7 +20,7 @@ import { useWorkbenchStore } from "@/store/workbench";
 function ControlBlock({ data }: { data: any }) {
   const getSymbol = () => {
     const label = data.label.toLowerCase();
-    
+
     if (label.includes('pid')) {
       return (
         <div className="w-16 h-12 border-2 border-foreground bg-background flex items-center justify-center">
@@ -28,7 +28,7 @@ function ControlBlock({ data }: { data: any }) {
         </div>
       );
     }
-    
+
     if (label.includes('plant') || label.includes('transfer')) {
       return (
         <div className="w-20 h-12 border-2 border-foreground bg-background flex items-center justify-center">
@@ -38,7 +38,7 @@ function ControlBlock({ data }: { data: any }) {
         </div>
       );
     }
-    
+
     if (label.includes('gain')) {
       return (
         <div className="w-12 h-12 border-2 border-foreground bg-background flex items-center justify-center transform rotate-45">
@@ -46,7 +46,7 @@ function ControlBlock({ data }: { data: any }) {
         </div>
       );
     }
-    
+
     if (label.includes('step')) {
       return (
         <div className="w-16 h-12 flex items-center justify-center">
@@ -56,7 +56,7 @@ function ControlBlock({ data }: { data: any }) {
         </div>
       );
     }
-    
+
     if (label.includes('sensor')) {
       return (
         <div className="w-12 h-12 border-2 border-foreground bg-background rounded-full flex items-center justify-center">
@@ -64,7 +64,7 @@ function ControlBlock({ data }: { data: any }) {
         </div>
       );
     }
-    
+
     if (label.includes('sine')) {
       return (
         <div className="w-16 h-12 flex items-center justify-center">
@@ -74,7 +74,7 @@ function ControlBlock({ data }: { data: any }) {
         </div>
       );
     }
-    
+
     // Default rectangular block
     return (
       <div className="w-16 h-12 border-2 border-foreground bg-background flex items-center justify-center">
@@ -92,7 +92,7 @@ function ControlBlock({ data }: { data: any }) {
       />
 
       {getSymbol()}
-      
+
       {data.subtitle && (
         <div className="text-[8px] text-muted-foreground text-center mt-1 leading-tight max-w-20">
           {data.subtitle}
