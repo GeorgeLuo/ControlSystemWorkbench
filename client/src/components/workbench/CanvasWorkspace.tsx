@@ -25,6 +25,16 @@ function ControlBlock({ data }: { data: any }) {
         position={Position.Left}
         className="w-2 h-2 bg-primary border border-card"
       />
+      <Handle
+        type="target"
+        position={Position.Top}
+        className="w-2 h-2 bg-primary border border-card"
+      />
+      <Handle
+        type="target"
+        position={Position.Bottom}
+        className="w-2 h-2 bg-primary border border-card"
+      />
 
       <div className="text-[10px] font-medium text-foreground text-center leading-tight">
         {data.label}
@@ -40,6 +50,16 @@ function ControlBlock({ data }: { data: any }) {
         position={Position.Right}
         className="w-2 h-2 bg-primary border border-card"
       />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        className="w-2 h-2 bg-primary border border-card"
+      />
+      <Handle
+        type="source"
+        position={Position.Left}
+        className="w-2 h-2 bg-primary border border-card"
+      />
     </div>
   );
 }
@@ -52,19 +72,46 @@ const initialNodes: Node[] = [
   {
     id: "1",
     type: "controlBlock",
-    position: { x: 100, y: 100 },
+    position: { x: 50, y: 100 },
     data: {
-      label: "PID Controller",
-      subtitle: "Kp=1, Ki=0.1, Kd=0.05",
+      label: "Step Input",
+      subtitle: "Amp=1.0",
     },
   },
   {
     id: "2",
     type: "controlBlock",
+    position: { x: 200, y: 100 },
+    data: {
+      label: "PID Controller",
+      subtitle: "Kp=2, Ki=0.5, Kd=0.1",
+    },
+  },
+  {
+    id: "3",
+    type: "controlBlock",
     position: { x: 350, y: 100 },
     data: {
       label: "Plant Model",
       subtitle: "1/(s²+2s+1)",
+    },
+  },
+  {
+    id: "4",
+    type: "controlBlock",
+    position: { x: 500, y: 100 },
+    data: {
+      label: "Gain Block",
+      subtitle: "K=1.0",
+    },
+  },
+  {
+    id: "5",
+    type: "controlBlock",
+    position: { x: 200, y: 200 },
+    data: {
+      label: "Sensor",
+      subtitle: "K=1.0",
     },
   },
 ];
@@ -75,6 +122,66 @@ const initialEdges: Edge[] = [
     source: "1",
     target: "2",
     type: "smoothstep",
+    markerEnd: {
+      type: MarkerType.Arrow,
+      color: "hsl(var(--primary))",
+    },
+    style: {
+      stroke: "hsl(var(--primary))",
+      strokeWidth: 2,
+    },
+  },
+  {
+    id: "e2-3",
+    source: "2",
+    target: "3",
+    type: "smoothstep",
+    markerEnd: {
+      type: MarkerType.Arrow,
+      color: "hsl(var(--primary))",
+    },
+    style: {
+      stroke: "hsl(var(--primary))",
+      strokeWidth: 2,
+    },
+  },
+  {
+    id: "e3-4",
+    source: "3",
+    target: "4",
+    type: "smoothstep",
+    markerEnd: {
+      type: MarkerType.Arrow,
+      color: "hsl(var(--primary))",
+    },
+    style: {
+      stroke: "hsl(var(--primary))",
+      strokeWidth: 2,
+    },
+  },
+  {
+    id: "e4-5",
+    source: "4",
+    target: "5",
+    type: "smoothstep",
+    sourceHandle: "bottom",
+    targetHandle: "right",
+    markerEnd: {
+      type: MarkerType.Arrow,
+      color: "hsl(var(--primary))",
+    },
+    style: {
+      stroke: "hsl(var(--primary))",
+      strokeWidth: 2,
+    },
+  },
+  {
+    id: "e5-2",
+    source: "5",
+    target: "2",
+    type: "smoothstep",
+    sourceHandle: "left",
+    targetHandle: "bottom",
     markerEnd: {
       type: MarkerType.Arrow,
       color: "hsl(var(--primary))",

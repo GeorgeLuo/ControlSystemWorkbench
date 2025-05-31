@@ -12,12 +12,13 @@ export default function FormulaViewer() {
     // Find the main control loop
     const pidBlock = blocks.find((block) => block.type === "pid-controller");
     const plantBlock = blocks.find(
-      (block) => block.type === "transfer-function",
+      (block) => block.type === "transfer-function" || block.type === "plant-model",
     );
     const gainBlock = blocks.find((block) => block.type === "gain-block");
     const inputBlock = blocks.find(
       (block) => block.type === "step-input" || block.type === "sine-wave",
     );
+    const sensorBlock = blocks.find((block) => block.type === "sensor");
 
     if (pidBlock && plantBlock) {
       // Get actual PID parameters from block properties
