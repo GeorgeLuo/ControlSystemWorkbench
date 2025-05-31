@@ -181,8 +181,9 @@
 .react-flow__handle {
   width: 12px;
   height: 12px;
-  background-color: hsl(var(--primary));
-  border: 2px solid hsl(var(--card));
+  background-color: transparent;
+  border: none;
+  opacity: 0;
 }
 
 .react-flow__edge-path {

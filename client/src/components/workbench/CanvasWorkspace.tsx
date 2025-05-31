@@ -106,6 +106,7 @@ function ControlBlock({ data }: { data: any }) {
         <Handle
           type="target"
           position={Position.Left}
+          id="input"
           className="w-2 h-2 bg-primary border-0"
         />
       )}
@@ -114,6 +115,7 @@ function ControlBlock({ data }: { data: any }) {
         <Handle
           type="target"
           position={Position.Top}
+          id="input"
           className="w-2 h-2 bg-primary border-0"
         />
       )}
@@ -130,6 +132,7 @@ function ControlBlock({ data }: { data: any }) {
         <Handle
           type="source"
           position={Position.Right}
+          id="output"
           className="w-2 h-2 bg-primary border-0"
         />
       )}
@@ -138,6 +141,7 @@ function ControlBlock({ data }: { data: any }) {
         <Handle
           type="source"
           position={Position.Left}
+          id="output"
           className="w-2 h-2 bg-primary border-0"
         />
       )}
@@ -202,6 +206,8 @@ const initialEdges: Edge[] = [
     id: "e1-2",
     source: "1",
     target: "2",
+    sourceHandle: "output",
+    targetHandle: "input",
     type: "smoothstep",
     markerEnd: {
       type: MarkerType.Arrow,
@@ -216,6 +222,8 @@ const initialEdges: Edge[] = [
     id: "e2-3",
     source: "2",
     target: "3",
+    sourceHandle: "output",
+    targetHandle: "input",
     type: "smoothstep",
     markerEnd: {
       type: MarkerType.Arrow,
@@ -230,6 +238,8 @@ const initialEdges: Edge[] = [
     id: "e3-4",
     source: "3",
     target: "4",
+    sourceHandle: "output",
+    targetHandle: "input",
     type: "smoothstep",
     markerEnd: {
       type: MarkerType.Arrow,
@@ -244,6 +254,8 @@ const initialEdges: Edge[] = [
     id: "e4-5",
     source: "4",
     target: "5",
+    sourceHandle: "output",
+    targetHandle: "input",
     type: "smoothstep",
     markerEnd: {
       type: MarkerType.Arrow,
@@ -258,6 +270,8 @@ const initialEdges: Edge[] = [
     id: "e5-2",
     source: "5",
     target: "2",
+    sourceHandle: "output",
+    targetHandle: "input",
     type: "smoothstep",
     markerEnd: {
       type: MarkerType.Arrow,
