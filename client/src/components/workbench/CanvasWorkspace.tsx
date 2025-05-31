@@ -23,16 +23,16 @@ function ControlBlock({ data }: { data: any }) {
     
     if (label.includes('pid')) {
       return (
-        <div className="w-16 h-12 border-2 border-foreground bg-background flex items-center justify-center">
-          <div className="text-xs font-bold">PID</div>
+        <div className="w-16 h-12 border-2 border-black bg-white flex items-center justify-center rounded-sm shadow-sm">
+          <div className="text-xs font-bold text-black">PID</div>
         </div>
       );
     }
     
     if (label.includes('plant') || label.includes('transfer')) {
       return (
-        <div className="w-20 h-12 border-2 border-foreground bg-background flex items-center justify-center">
-          <div className="text-xs text-center">
+        <div className="w-20 h-12 border-2 border-black bg-white flex items-center justify-center rounded-sm shadow-sm">
+          <div className="text-xs text-center text-black">
             <div>G(s)</div>
           </div>
         </div>
@@ -41,17 +41,17 @@ function ControlBlock({ data }: { data: any }) {
     
     if (label.includes('gain')) {
       return (
-        <div className="w-12 h-12 border-2 border-foreground bg-background flex items-center justify-center transform rotate-45">
-          <div className="text-xs font-bold transform -rotate-45">K</div>
+        <div className="w-12 h-12 border-2 border-black bg-white flex items-center justify-center transform rotate-45 shadow-sm">
+          <div className="text-xs font-bold transform -rotate-45 text-black">K</div>
         </div>
       );
     }
     
     if (label.includes('step')) {
       return (
-        <div className="w-16 h-12 flex items-center justify-center">
-          <svg width="48" height="36" viewBox="0 0 48 36" className="stroke-foreground fill-none stroke-2">
-            <path d="M4 28 L4 18 L20 18 L20 8 L44 8" />
+        <div className="w-16 h-12 flex items-center justify-center bg-white border border-gray-300 rounded-sm shadow-sm">
+          <svg width="40" height="24" viewBox="0 0 40 24" className="stroke-black fill-none stroke-2">
+            <path d="M2 20 L2 12 L18 12 L18 4 L38 4" />
           </svg>
         </div>
       );
@@ -59,17 +59,17 @@ function ControlBlock({ data }: { data: any }) {
     
     if (label.includes('sensor')) {
       return (
-        <div className="w-12 h-12 border-2 border-foreground bg-background rounded-full flex items-center justify-center">
-          <div className="text-xs font-bold">H</div>
+        <div className="w-12 h-12 border-2 border-black bg-white rounded-full flex items-center justify-center shadow-sm">
+          <div className="text-xs font-bold text-black">H</div>
         </div>
       );
     }
     
     if (label.includes('sine')) {
       return (
-        <div className="w-16 h-12 flex items-center justify-center">
-          <svg width="48" height="36" viewBox="0 0 48 36" className="stroke-foreground fill-none stroke-2">
-            <path d="M4 18 Q12 8 20 18 T36 18 Q40 14 44 18" />
+        <div className="w-16 h-12 flex items-center justify-center bg-white border border-gray-300 rounded-sm shadow-sm">
+          <svg width="40" height="24" viewBox="0 0 40 24" className="stroke-black fill-none stroke-2">
+            <path d="M2 12 Q8 4 14 12 T26 12 Q30 8 36 12" />
           </svg>
         </div>
       );
@@ -77,8 +77,8 @@ function ControlBlock({ data }: { data: any }) {
     
     // Default rectangular block
     return (
-      <div className="w-16 h-12 border-2 border-foreground bg-background flex items-center justify-center">
-        <div className="text-xs text-center">{data.label}</div>
+      <div className="w-16 h-12 border-2 border-black bg-white flex items-center justify-center rounded-sm shadow-sm">
+        <div className="text-xs text-center text-black">{data.label}</div>
       </div>
     );
   };
@@ -88,13 +88,14 @@ function ControlBlock({ data }: { data: any }) {
       <Handle
         type="target"
         position={Position.Left}
-        className="w-2 h-2 bg-primary border-0"
+        className="w-3 h-3 !bg-blue-500 !border-0 rounded-full"
+        style={{ left: -6 }}
       />
 
       {getSymbol()}
       
       {data.subtitle && (
-        <div className="text-[8px] text-muted-foreground text-center mt-1 leading-tight max-w-20">
+        <div className="text-[10px] text-gray-600 text-center mt-1 leading-tight max-w-24">
           {data.subtitle}
         </div>
       )}
@@ -102,11 +103,12 @@ function ControlBlock({ data }: { data: any }) {
       <Handle
         type="source"
         position={Position.Right}
-        className="w-2 h-2 bg-primary border-0"
+        className="w-3 h-3 !bg-blue-500 !border-0 rounded-full"
+        style={{ right: -6 }}
       />
     </div>
   );
-}
+}</div>
 
 const nodeTypes: NodeTypes = {
   controlBlock: ControlBlock,
@@ -165,13 +167,15 @@ const initialEdges: Edge[] = [
     id: "e1-2",
     source: "1",
     target: "2",
-    type: "smoothstep",
+    type: "straight",
     markerEnd: {
       type: MarkerType.Arrow,
-      color: "hsl(var(--primary))",
+      color: "#3b82f6",
+      width: 15,
+      height: 15,
     },
     style: {
-      stroke: "hsl(var(--primary))",
+      stroke: "#3b82f6",
       strokeWidth: 2,
     },
   },
@@ -179,13 +183,15 @@ const initialEdges: Edge[] = [
     id: "e2-3",
     source: "2",
     target: "3",
-    type: "smoothstep",
+    type: "straight",
     markerEnd: {
       type: MarkerType.Arrow,
-      color: "hsl(var(--primary))",
+      color: "#3b82f6",
+      width: 15,
+      height: 15,
     },
     style: {
-      stroke: "hsl(var(--primary))",
+      stroke: "#3b82f6",
       strokeWidth: 2,
     },
   },
@@ -193,13 +199,15 @@ const initialEdges: Edge[] = [
     id: "e3-4",
     source: "3",
     target: "4",
-    type: "smoothstep",
+    type: "straight",
     markerEnd: {
       type: MarkerType.Arrow,
-      color: "hsl(var(--primary))",
+      color: "#3b82f6",
+      width: 15,
+      height: 15,
     },
     style: {
-      stroke: "hsl(var(--primary))",
+      stroke: "#3b82f6",
       strokeWidth: 2,
     },
   },
@@ -207,13 +215,15 @@ const initialEdges: Edge[] = [
     id: "e4-5",
     source: "4",
     target: "5",
-    type: "smoothstep",
+    type: "step",
     markerEnd: {
       type: MarkerType.Arrow,
-      color: "hsl(var(--primary))",
+      color: "#3b82f6",
+      width: 15,
+      height: 15,
     },
     style: {
-      stroke: "hsl(var(--primary))",
+      stroke: "#3b82f6",
       strokeWidth: 2,
     },
   },
@@ -221,17 +231,19 @@ const initialEdges: Edge[] = [
     id: "e5-2",
     source: "5",
     target: "2",
-    type: "smoothstep",
+    type: "step",
     markerEnd: {
       type: MarkerType.Arrow,
-      color: "hsl(var(--primary))",
+      color: "#3b82f6",
+      width: 15,
+      height: 15,
     },
     style: {
-      stroke: "hsl(var(--primary))",
+      stroke: "#3b82f6",
       strokeWidth: 2,
     },
   },
-];
+];</div>
 
 export default function CanvasWorkspace() {
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -246,7 +258,20 @@ export default function CanvasWorkspace() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const onConnect = useCallback(
-    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
+    (params: Connection) => setEdges((eds) => addEdge({
+      ...params,
+      type: "straight",
+      markerEnd: {
+        type: MarkerType.Arrow,
+        color: "#3b82f6",
+        width: 15,
+        height: 15,
+      },
+      style: {
+        stroke: "#3b82f6",
+        strokeWidth: 2,
+      },
+    }, eds)),
     [setEdges],
   );
 
