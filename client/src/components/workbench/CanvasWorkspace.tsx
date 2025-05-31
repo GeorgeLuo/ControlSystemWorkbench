@@ -21,15 +21,15 @@ function ControlBlock({ data }: { data: any }) {
   const getSymbol = () => {
     const label = data.label.toLowerCase();
 
-    if (label.includes('pid')) {
+    if (label.includes("pid")) {
       return (
-        <div className="w-16 h-12 border-2 border-foreground bg-background flex items-center justify-center">
+        <div className="w-16 h-12 border-2 border-foreground bg-transparent flex items-center justify-center">
           <div className="text-xs font-bold">PID</div>
         </div>
       );
     }
 
-    if (label.includes('plant') || label.includes('transfer')) {
+    if (label.includes("plant") || label.includes("transfer")) {
       return (
         <div className="w-20 h-12 border-2 border-foreground bg-background flex items-center justify-center">
           <div className="text-xs text-center">
@@ -39,7 +39,7 @@ function ControlBlock({ data }: { data: any }) {
       );
     }
 
-    if (label.includes('gain')) {
+    if (label.includes("gain")) {
       return (
         <div className="w-12 h-12 flex items-center justify-center transform rotate-45">
           <div className="w-full h-full border-2 border-foreground bg-background flex items-center justify-center">
@@ -49,17 +49,22 @@ function ControlBlock({ data }: { data: any }) {
       );
     }
 
-    if (label.includes('step')) {
+    if (label.includes("step")) {
       return (
         <div className="w-16 h-12 flex items-center justify-center">
-          <svg width="48" height="36" viewBox="0 0 48 36" className="stroke-foreground fill-none stroke-2">
+          <svg
+            width="48"
+            height="36"
+            viewBox="0 0 48 36"
+            className="stroke-foreground fill-none stroke-2"
+          >
             <path d="M4 28 L4 18 L20 18 L20 8 L44 8" />
           </svg>
         </div>
       );
     }
 
-    if (label.includes('sensor')) {
+    if (label.includes("sensor")) {
       return (
         <div className="w-12 h-12 flex items-center justify-center">
           <div className="w-full h-full border-2 border-foreground bg-background rounded-full flex items-center justify-center">
@@ -69,10 +74,15 @@ function ControlBlock({ data }: { data: any }) {
       );
     }
 
-    if (label.includes('sine')) {
+    if (label.includes("sine")) {
       return (
         <div className="w-16 h-12 flex items-center justify-center">
-          <svg width="48" height="36" viewBox="0 0 48 36" className="stroke-foreground fill-none stroke-2">
+          <svg
+            width="48"
+            height="36"
+            viewBox="0 0 48 36"
+            className="stroke-foreground fill-none stroke-2"
+          >
             <path d="M4 18 Q12 8 20 18 T36 18 Q40 14 44 18" />
           </svg>
         </div>
@@ -88,7 +98,7 @@ function ControlBlock({ data }: { data: any }) {
   };
 
   const label = data.label.toLowerCase();
-  const isSensor = label.includes('sensor');
+  const isSensor = label.includes("sensor");
 
   return (
     <div className="select-none">
@@ -99,7 +109,7 @@ function ControlBlock({ data }: { data: any }) {
           className="w-2 h-2 bg-primary border-0"
         />
       )}
-      
+
       {isSensor && (
         <Handle
           type="target"
@@ -123,7 +133,7 @@ function ControlBlock({ data }: { data: any }) {
           className="w-2 h-2 bg-primary border-0"
         />
       )}
-      
+
       {isSensor && (
         <Handle
           type="source"
