@@ -31,7 +31,7 @@ function ControlBlock({ data }: { data: any }) {
 
     if (label.includes("plant") || label.includes("transfer")) {
       return (
-        <div className="w-20 h-12 border-2 border-foreground bg-background flex items-center justify-center">
+        <div className="w-20 h-12 border-2 border-foreground bg-transparent flex items-center justify-center">
           <div className="text-xs text-center">
             <div>G(s)</div>
           </div>
@@ -42,7 +42,7 @@ function ControlBlock({ data }: { data: any }) {
     if (label.includes("gain")) {
       return (
         <div className="w-12 h-12 flex items-center justify-center transform rotate-45">
-          <div className="w-full h-full border-2 border-foreground bg-background flex items-center justify-center">
+          <div className="w-full h-full border-2 border-foreground bg-transparent flex items-center justify-center">
             <div className="text-xs font-bold transform -rotate-45">K</div>
           </div>
         </div>
@@ -67,7 +67,7 @@ function ControlBlock({ data }: { data: any }) {
     if (label.includes("sensor")) {
       return (
         <div className="w-12 h-12 flex items-center justify-center">
-          <div className="w-full h-full border-2 border-foreground bg-background rounded-full flex items-center justify-center">
+          <div className="w-full h-full border-2 border-foreground bg-transparent rounded-full flex items-center justify-center">
             <div className="text-xs font-bold">H</div>
           </div>
         </div>
@@ -91,7 +91,7 @@ function ControlBlock({ data }: { data: any }) {
 
     // Default rectangular block
     return (
-      <div className="w-16 h-12 border-2 border-foreground bg-background flex items-center justify-center">
+      <div className="w-16 h-12 border-2 border-foreground bg-transparent flex items-center justify-center">
         <div className="text-xs text-center">{data.label}</div>
       </div>
     );
