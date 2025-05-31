@@ -23,7 +23,7 @@ function ControlBlock({ data }: { data: any }) {
     
     if (label.includes('pid')) {
       return (
-        <div className="w-16 h-12 border-2 border-foreground bg-card flex items-center justify-center">
+        <div className="w-16 h-12 border-2 border-foreground bg-background flex items-center justify-center">
           <div className="text-xs font-bold">PID</div>
         </div>
       );
@@ -31,7 +31,7 @@ function ControlBlock({ data }: { data: any }) {
     
     if (label.includes('plant') || label.includes('transfer')) {
       return (
-        <div className="w-20 h-12 border-2 border-foreground bg-card flex items-center justify-center">
+        <div className="w-20 h-12 border-2 border-foreground bg-background flex items-center justify-center">
           <div className="text-xs text-center">
             <div>G(s)</div>
           </div>
@@ -41,7 +41,7 @@ function ControlBlock({ data }: { data: any }) {
     
     if (label.includes('gain')) {
       return (
-        <div className="w-12 h-12 border-2 border-foreground bg-card flex items-center justify-center transform rotate-45">
+        <div className="w-12 h-12 border-2 border-foreground bg-background flex items-center justify-center transform rotate-45">
           <div className="text-xs font-bold transform -rotate-45">K</div>
         </div>
       );
@@ -49,7 +49,7 @@ function ControlBlock({ data }: { data: any }) {
     
     if (label.includes('step')) {
       return (
-        <div className="w-16 h-12 bg-card flex items-center justify-center">
+        <div className="w-16 h-12 flex items-center justify-center">
           <svg width="48" height="36" viewBox="0 0 48 36" className="stroke-foreground fill-none stroke-2">
             <path d="M4 28 L4 18 L20 18 L20 8 L44 8" />
           </svg>
@@ -59,7 +59,7 @@ function ControlBlock({ data }: { data: any }) {
     
     if (label.includes('sensor')) {
       return (
-        <div className="w-12 h-12 border-2 border-foreground bg-card rounded-full flex items-center justify-center">
+        <div className="w-12 h-12 border-2 border-foreground bg-background rounded-full flex items-center justify-center">
           <div className="text-xs font-bold">H</div>
         </div>
       );
@@ -67,7 +67,7 @@ function ControlBlock({ data }: { data: any }) {
     
     if (label.includes('sine')) {
       return (
-        <div className="w-16 h-12 bg-card flex items-center justify-center">
+        <div className="w-16 h-12 flex items-center justify-center">
           <svg width="48" height="36" viewBox="0 0 48 36" className="stroke-foreground fill-none stroke-2">
             <path d="M4 18 Q12 8 20 18 T36 18 Q40 14 44 18" />
           </svg>
@@ -77,7 +77,7 @@ function ControlBlock({ data }: { data: any }) {
     
     // Default rectangular block
     return (
-      <div className="w-16 h-12 border-2 border-foreground bg-card flex items-center justify-center">
+      <div className="w-16 h-12 border-2 border-foreground bg-background flex items-center justify-center">
         <div className="text-xs text-center">{data.label}</div>
       </div>
     );
@@ -88,16 +88,6 @@ function ControlBlock({ data }: { data: any }) {
       <Handle
         type="target"
         position={Position.Left}
-        className="w-2 h-2 bg-primary border border-card"
-      />
-      <Handle
-        type="target"
-        position={Position.Top}
-        className="w-2 h-2 bg-primary border border-card"
-      />
-      <Handle
-        type="target"
-        position={Position.Bottom}
         className="w-2 h-2 bg-primary border border-card"
       />
 
@@ -112,16 +102,6 @@ function ControlBlock({ data }: { data: any }) {
       <Handle
         type="source"
         position={Position.Right}
-        className="w-2 h-2 bg-primary border border-card"
-      />
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        className="w-2 h-2 bg-primary border border-card"
-      />
-      <Handle
-        type="source"
-        position={Position.Left}
         className="w-2 h-2 bg-primary border border-card"
       />
     </div>
@@ -145,7 +125,7 @@ const initialNodes: Node[] = [
   {
     id: "2",
     type: "controlBlock",
-    position: { x: 250, y: 150 },
+    position: { x: 200, y: 150 },
     data: {
       label: "PID Controller",
       subtitle: "Kp=2, Ki=0.5, Kd=0.1",
@@ -154,7 +134,7 @@ const initialNodes: Node[] = [
   {
     id: "3",
     type: "controlBlock",
-    position: { x: 400, y: 150 },
+    position: { x: 350, y: 150 },
     data: {
       label: "Plant Model",
       subtitle: "1/(s²+2s+1)",
@@ -163,7 +143,7 @@ const initialNodes: Node[] = [
   {
     id: "4",
     type: "controlBlock",
-    position: { x: 550, y: 150 },
+    position: { x: 500, y: 150 },
     data: {
       label: "Gain Block",
       subtitle: "K=1.0",
@@ -172,7 +152,7 @@ const initialNodes: Node[] = [
   {
     id: "5",
     type: "controlBlock",
-    position: { x: 400, y: 250 },
+    position: { x: 350, y: 250 },
     data: {
       label: "Sensor",
       subtitle: "K=1.0",
@@ -227,6 +207,8 @@ const initialEdges: Edge[] = [
     id: "e4-5",
     source: "4",
     target: "5",
+    sourceHandle: null,
+    targetHandle: null,
     type: "smoothstep",
     markerEnd: {
       type: MarkerType.Arrow,
@@ -241,6 +223,8 @@ const initialEdges: Edge[] = [
     id: "e5-2",
     source: "5",
     target: "2",
+    sourceHandle: null,
+    targetHandle: null,
     type: "smoothstep",
     markerEnd: {
       type: MarkerType.Arrow,
