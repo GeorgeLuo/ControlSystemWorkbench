@@ -52,36 +52,38 @@ export interface WorkbenchState {
   // UI State
   sidebarExpanded: boolean;
   selectedTool: string | null;
-  
+
   // Project State
   projectName: string;
   lastSaved: Date | null;
-  
+
   // Canvas State
   blocks: BlockNode[];
   connections: Connection[];
   selectedBlocks: string[];
   canvasZoom: number;
-  
+
   // Simulation State
   simulation: SimulationState;
-  
+
   // Window Management
   windows: WindowState[];
   maxZIndex: number;
-  
+
   // Actions
   toggleSidebar: () => void;
   setSelectedTool: (tool: string | null) => void;
   setProjectName: (name: string) => void;
-  
+
   // Block Management
   addBlock: (type: string, position: Position) => void;
   updateBlock: (id: string, updates: Partial<BlockNode>) => void;
   removeBlock: (id: string) => void;
   selectBlock: (id: string, multi?: boolean) => void;
   clearSelection: () => void;
-  
+  updateBlocks: (blocks: BlockNode[]) => void;
+  updateConnections: (connections: Connection[]) => void;
+
   // Window Management
   openWindow: (type: string, title: string, position?: Position, size?: Size) => void;
   closeWindow: (id: string) => void;
@@ -90,12 +92,12 @@ export interface WorkbenchState {
   updateWindowPosition: (id: string, position: Position) => void;
   updateWindowSize: (id: string, size: Size) => void;
   bringWindowToFront: (id: string) => void;
-  
+
   // Canvas Actions
   setCanvasZoom: (zoom: number) => void;
   addConnection: (connection: Omit<Connection, 'id'>) => void;
   removeConnection: (id: string) => void;
-  
+
   // Simulation Actions
   startSimulation: () => void;
   stopSimulation: () => void;
@@ -107,17 +109,17 @@ export const useWorkbenchStore = create<WorkbenchState>((set, get) => ({
   // Initial UI State
   sidebarExpanded: false,
   selectedTool: null,
-  
+
   // Initial Project State
   projectName: 'Untitled Project',
   lastSaved: null,
-  
+
   // Initial Canvas State
   blocks: [],
   connections: [],
   selectedBlocks: [],
   canvasZoom: 100,
-  
+
   // Initial Simulation State
   simulation: {
     isRunning: false,
@@ -126,20 +128,20 @@ export const useWorkbenchStore = create<WorkbenchState>((set, get) => ({
     duration: 10,
     data: {},
   },
-  
+
   // Initial Window State
   windows: [],
   maxZIndex: 0,
-  
+
   // Actions
   toggleSidebar: () => set((state) => ({ 
     sidebarExpanded: !state.sidebarExpanded 
   })),
-  
+
   setSelectedTool: (tool) => set({ selectedTool: tool }),
-  
+
   setProjectName: (name) => set({ projectName: name }),
-  
+
   // Block Management
   addBlock: (type, position) => {
     const newBlock: BlockNode = {
@@ -151,19 +153,19 @@ export const useWorkbenchStore = create<WorkbenchState>((set, get) => ({
         properties: getDefaultProperties(type),
       },
     };
-    
+
     set((state) => ({
       blocks: [...state.blocks, newBlock],
       selectedBlocks: [newBlock.id],
     }));
   },
-  
+
   updateBlock: (id, updates) => set((state) => ({
     blocks: state.blocks.map((block) =>
       block.id === id ? { ...block, ...updates } : block
     ),
   })),
-  
+
   removeBlock: (id) => set((state) => ({
     blocks: state.blocks.filter((block) => block.id !== id),
     connections: state.connections.filter(
@@ -171,7 +173,7 @@ export const useWorkbenchStore = create<WorkbenchState>((set, get) => ({
     ),
     selectedBlocks: state.selectedBlocks.filter((blockId) => blockId !== id),
   })),
-  
+
   selectBlock: (id, multi = false) => set((state) => ({
     selectedBlocks: multi 
       ? state.selectedBlocks.includes(id)
@@ -179,9 +181,17 @@ export const useWorkbenchStore = create<WorkbenchState>((set, get) => ({
         : [...state.selectedBlocks, id]
       : [id],
   })),
-  
+
   clearSelection: () => set({ selectedBlocks: [] }),
-  
+
+  updateBlocks: (blocks) => {
+    set({ blocks });
+  },
+
+  updateConnections: (connections) => {
+    set({ connections });
+  },
+
   // Window Management
   openWindow: (type, title, position = { x: 100, y: 100 }, size = { width: 400, height: 300 }) => {
     const newWindow: WindowState = {
@@ -194,82 +204,82 @@ export const useWorkbenchStore = create<WorkbenchState>((set, get) => ({
       isMaximized: false,
       zIndex: get().maxZIndex + 1,
     };
-    
+
     set((state) => ({
       windows: [...state.windows, newWindow],
       maxZIndex: state.maxZIndex + 1,
     }));
   },
-  
+
   closeWindow: (id) => set((state) => ({
     windows: state.windows.filter((window) => window.id !== id),
   })),
-  
+
   minimizeWindow: (id) => set((state) => ({
     windows: state.windows.map((window) =>
       window.id === id ? { ...window, isMinimized: !window.isMinimized } : window
     ),
   })),
-  
+
   maximizeWindow: (id) => set((state) => ({
     windows: state.windows.map((window) =>
       window.id === id ? { ...window, isMaximized: !window.isMaximized } : window
     ),
   })),
-  
+
   updateWindowPosition: (id, position) => set((state) => ({
     windows: state.windows.map((window) =>
       window.id === id ? { ...window, position } : window
     ),
   })),
-  
+
   updateWindowSize: (id, size) => set((state) => ({
     windows: state.windows.map((window) =>
       window.id === id ? { ...window, size } : window
     ),
   })),
-  
+
   bringWindowToFront: (id) => set((state) => ({
     windows: state.windows.map((window) =>
       window.id === id ? { ...window, zIndex: state.maxZIndex + 1 } : window
     ),
     maxZIndex: state.maxZIndex + 1,
   })),
-  
+
   // Canvas Actions
   setCanvasZoom: (zoom) => set({ canvasZoom: zoom }),
-  
+
   addConnection: (connection) => {
     const newConnection: Connection = {
       ...connection,
       id: generateId(),
     };
-    
+
     set((state) => ({
       connections: [...state.connections, newConnection],
     }));
   },
-  
+
   removeConnection: (id) => set((state) => ({
     connections: state.connections.filter((conn) => conn.id !== id),
   })),
-  
+
   // Simulation Actions
   startSimulation: () => set((state) => ({
     simulation: { ...state.simulation, isRunning: true, currentTime: 0 },
   })),
-  
+
   stopSimulation: () => set((state) => ({
     simulation: { ...state.simulation, isRunning: false },
   })),
-  
+
   updateSimulationData: (blockId, data) => set((state) => ({
     simulation: {
       ...state.simulation,
       data: { ...state.simulation.data, [blockId]: data },
     },
   })),
-  
+
   setSimulationTime: (time) => set((state) => ({
     simulation: { ...state.simulation, currentTime: time },
   })),

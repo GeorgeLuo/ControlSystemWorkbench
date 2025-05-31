@@ -13,12 +13,21 @@ export default function FormulaViewer() {
     // Find the main control loop
     const pidBlock = blocks.find(block => block.type === 'pid-controller');
     const plantBlock = blocks.find(block => block.type === 'transfer-function');
+    const gainBlock = blocks.find(block => block.type === 'gain-block');
     const inputBlock = blocks.find(block => block.type === 'step-input' || block.type === 'sine-wave');
 
     if (pidBlock && plantBlock) {
-      const pidFormula = "K_p + \\frac{K_i}{s} + K_d s";
-      const plantFormula = "\\frac{" + (plantBlock.data?.properties?.numerator?.join('s + ') || "1") + "}{" + 
-                          (plantBlock.data?.properties?.denominator?.join('s + ') || "s + 1") + "}";
+      // Get actual PID parameters from block properties
+      const kp = pidBlock.data?.properties?.kp || 1;
+      const ki = pidBlock.data?.properties?.ki || 0.1;
+      const kd = pidBlock.data?.properties?.kd || 0.05;
+      
+      const pidFormula = `${kp} + \\frac{${ki}}{s} + ${kd} s`;
+      
+      // Get actual plant parameters
+      const numerator = plantBlock.data?.properties?.numerator || ["1"];
+      const denominator = plantBlock.data?.properties?.denominator || ["s", "1"];
+      const plantFormula = `\\frac{${numerator.join(' + ')}}{${denominator.join(' + ')}}`;
       
       return {
         openLoop: `G_c(s) \\cdot G_p(s) = (${pidFormula}) \\cdot (${plantFormula})`,
@@ -29,15 +38,27 @@ export default function FormulaViewer() {
     }
 
     if (plantBlock) {
-      const plantFormula = "\\frac{" + (plantBlock.data?.properties?.numerator?.join('s + ') || "1") + "}{" + 
-                          (plantBlock.data?.properties?.denominator?.join('s + ') || "s + 1") + "}";
+      const numerator = plantBlock.data?.properties?.numerator || ["1"];
+      const denominator = plantBlock.data?.properties?.denominator || ["s", "1"];
+      const plantFormula = `\\frac{${numerator.join(' + ')}}{${denominator.join(' + ')}}`;
+      
       return {
         system: `G(s) = ${plantFormula}`,
         plant: `G_p(s) = ${plantFormula}`
       };
     }
 
-    return "Connect blocks to see system formulas";
+    if (gainBlock) {
+      const gain = gainBlock.data?.properties?.gain || 1;
+      return {
+        system: `G(s) = ${gain}`,
+        gain: `K = ${gain}`
+      };
+    }
+
+    // Show information about individual blocks if no system is formed
+    const blockList = blocks.map(block => `${block.data?.label || block.type} (${block.id})`).join(', ');
+    return `Blocks present: ${blockList}. Connect them to form a control system.`;
   };
 
   const formulas = generateFormula();
