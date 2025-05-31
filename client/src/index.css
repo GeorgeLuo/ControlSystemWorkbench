@@ -160,6 +160,13 @@
 }
 
 /* React Flow Overrides */
+.react-flow__node-controlBlock {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
 .react-flow__node {
   background-color: hsl(var(--card));
   border: 2px solid hsl(var(--border));
