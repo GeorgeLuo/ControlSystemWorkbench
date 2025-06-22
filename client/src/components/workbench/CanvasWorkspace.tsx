@@ -20,9 +20,15 @@ import {
   getBlockTypeFromLabel,
   getPropertiesFromSubtitle,
 } from "@/lib/block-utils";
+import type { BlockProperties } from "@/types/block";
 
 // Custom node component with standard control system symbols
-function ControlBlock({ data }: { data: any }) {
+interface ControlBlockData {
+  label: string;
+  subtitle?: string;
+}
+
+function ControlBlock({ data }: { data: ControlBlockData }) {
   const getSymbol = () => {
     const label = data.label.toLowerCase();
 

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { generateId } from '@/lib/utils';
+import type { Block, BlockProperties } from '@/types/block';
 
 export interface Position {
   x: number;
@@ -22,15 +23,6 @@ export interface WindowState {
   zIndex: number;
 }
 
-export interface BlockNode {
-  id: string;
-  type: string;
-  position: Position;
-  data: {
-    label: string;
-    properties: Record<string, any>;
-  };
-}
 
 export interface Connection {
   id: string;
@@ -58,7 +50,7 @@ export interface WorkbenchState {
   lastSaved: Date | null;
 
   // Canvas State
-  blocks: BlockNode[];
+  blocks: Block[];
   connections: Connection[];
   selectedBlocks: string[];
   canvasZoom: number;
@@ -77,11 +69,11 @@ export interface WorkbenchState {
 
   // Block Management
   addBlock: (type: string, position: Position) => void;
-  updateBlock: (id: string, updates: Partial<BlockNode>) => void;
+  updateBlock: (id: string, updates: Partial<Block>) => void;
   removeBlock: (id: string) => void;
   selectBlock: (id: string, multi?: boolean) => void;
   clearSelection: () => void;
-  updateBlocks: (blocks: BlockNode[]) => void;
+  updateBlocks: (blocks: Block[]) => void;
   updateConnections: (connections: Connection[]) => void;
 
   // Window Management
@@ -144,7 +136,7 @@ export const useWorkbenchStore = create<WorkbenchState>((set, get) => ({
 
   // Block Management
   addBlock: (type, position) => {
-    const newBlock: BlockNode = {
+    const newBlock: Block = {
       id: generateId(),
       type,
       position,
@@ -285,7 +277,7 @@ export const useWorkbenchStore = create<WorkbenchState>((set, get) => ({
   })),
 }));
 
-function getDefaultProperties(type: string): Record<string, any> {
+function getDefaultProperties(type: string): BlockProperties {
   switch (type) {
     case 'pid-controller':
       return { kp: 1.0, ki: 0.1, kd: 0.05, sampleTime: 0.01 };

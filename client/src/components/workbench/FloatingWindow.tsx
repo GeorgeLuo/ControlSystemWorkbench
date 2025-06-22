@@ -25,15 +25,18 @@ export default function FloatingWindow({ window, children }: FloatingWindowProps
     bringWindowToFront(window.id);
   };
 
-  const handleDrag = (e: any, data: { x: number; y: number }) => {
+  const handleDrag = (
+    _e: MouseEvent | TouchEvent,
+    data: { x: number; y: number }
+  ) => {
     updateWindowPosition(window.id, { x: data.x, y: data.y });
   };
 
   const handleResize = (
-    e: any,
-    direction: any,
-    ref: any,
-    delta: any,
+    _e: MouseEvent | TouchEvent,
+    _direction: string,
+    ref: HTMLElement,
+    _delta: { width: number; height: number },
     position: { x: number; y: number }
   ) => {
     updateWindowSize(window.id, {
