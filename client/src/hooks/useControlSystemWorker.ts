@@ -9,7 +9,7 @@ interface UseControlSystemWorkerOptions {
 
 export function useControlSystemWorker(options: UseControlSystemWorkerOptions = {}) {
   const workerRef = useRef<Worker | null>(null);
-  const pendingCalculations = useRef<Map<string, (response: WorkerResponse) => void>>(new Map());
+  const pendingCalculations = useRef<Map<string, (response: WorkerResponse<unknown>) => void>>(new Map());
 
   // Initialize worker
   useEffect(() => {
@@ -18,7 +18,7 @@ export function useControlSystemWorker(options: UseControlSystemWorkerOptions = 
       { type: 'module' }
     );
 
-    workerRef.current.onmessage = (e: MessageEvent<WorkerResponse>) => {
+    workerRef.current.onmessage = (e: MessageEvent<WorkerResponse<unknown>>) => {
       const response = e.data;
       const callback = pendingCalculations.current.get(response.id);
       
@@ -45,9 +45,9 @@ export function useControlSystemWorker(options: UseControlSystemWorkerOptions = 
   }, [options.onResult, options.onError]);
 
   // Calculate function
-  const calculate = useCallback(async <T = any>(
+  const calculate = useCallback(async <T>(
     type: WorkerMessage['type'],
-    data: any
+    data: unknown
   ): Promise<T> => {
     return new Promise((resolve, reject) => {
       if (!workerRef.current) {
@@ -57,7 +57,7 @@ export function useControlSystemWorker(options: UseControlSystemWorkerOptions = 
 
       const id = `calc_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
-      pendingCalculations.current.set(id, (response: WorkerResponse) => {
+      pendingCalculations.current.set(id, (response: WorkerResponse<T>) => {
         if (response.error) {
           reject(new Error(response.error));
         } else {
@@ -65,13 +65,13 @@ export function useControlSystemWorker(options: UseControlSystemWorkerOptions = 
         }
       });
 
-      const message: WorkerMessage = { id, type, data };
+      const message: WorkerMessage<typeof data> = { id, type, data };
       workerRef.current.postMessage(message);
     });
   }, []);
 
   // Specific calculation methods
-  const calculatePID = useCallback((params: {
+  interface PIDParams {
     kp: number;
     ki: number;
     kd: number;
@@ -80,28 +80,53 @@ export function useControlSystemWorker(options: UseControlSystemWorkerOptions = 
     dt: number;
     previousError?: number;
     integral?: number;
-  }) => calculate('pid_calculation', params), [calculate]);
+  }
 
-  const calculateTransferFunction = useCallback((params: {
+  interface PIDResult {
+    output: number;
+    error: number;
+    integral: number;
+    derivative: number;
+  }
+
+  const calculatePID = useCallback((params: PIDParams) =>
+    calculate<PIDResult>('pid_calculation', params), [calculate]);
+
+  interface TransferFunctionParams {
     numerator: number[];
     denominator: number[];
     input: number[];
     sampleTime: number;
-  }) => calculate('transfer_function', params), [calculate]);
+  }
 
-  const calculateStepResponse = useCallback((params: {
+  const calculateTransferFunction = useCallback((params: TransferFunctionParams) =>
+    calculate<number[]>('transfer_function', params), [calculate]);
+
+  interface StepResponseParams {
     numerator: number[];
     denominator: number[];
     amplitude: number;
     duration: number;
     sampleTime: number;
-  }) => calculate('step_response', params), [calculate]);
+  }
 
-  const calculateFrequencyResponse = useCallback((params: {
+  const calculateStepResponse = useCallback((params: StepResponseParams) =>
+    calculate<number[]>('step_response', params), [calculate]);
+
+  interface FrequencyResponseParams {
     numerator: number[];
     denominator: number[];
     frequencies: number[];
-  }) => calculate('frequency_response', params), [calculate]);
+  }
+
+  interface FrequencyResponseResult {
+    frequency: number;
+    magnitude: number;
+    phase: number;
+  }
+
+  const calculateFrequencyResponse = useCallback((params: FrequencyResponseParams) =>
+    calculate<FrequencyResponseResult[]>('frequency_response', params), [calculate]);
 
   return {
     calculatePID,

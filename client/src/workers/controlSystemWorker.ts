@@ -1,15 +1,15 @@
 
 // Control System Computation Worker
-export interface WorkerMessage {
+export interface WorkerMessage<T = unknown> {
   id: string;
   type: 'pid_calculation' | 'transfer_function' | 'step_response' | 'frequency_response';
-  data: any;
+  data: T;
 }
 
-export interface WorkerResponse {
+export interface WorkerResponse<T = unknown> {
   id: string;
   type: string;
-  result: any;
+  result: T;
   error?: string;
 }
 
@@ -142,11 +142,11 @@ function complexPower(complex: { real: number; imag: number }, power: number) {
 }
 
 // Worker message handler
-self.onmessage = function(e: MessageEvent<WorkerMessage>) {
+self.onmessage = function(e: MessageEvent<WorkerMessage<unknown>>) {
   const { id, type, data } = e.data;
-  
+
   try {
-    let result: any;
+    let result: unknown;
     
     switch (type) {
       case 'pid_calculation':

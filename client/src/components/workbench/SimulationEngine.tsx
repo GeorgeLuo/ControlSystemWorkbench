@@ -8,6 +8,7 @@ import {
   processStepInputBlock,
   processSineWaveBlock
 } from '@/lib/simulation';
+import { BlockTypes } from '@/constants/blockTypes';
 
 export default function SimulationEngine() {
   const { 
@@ -56,10 +57,15 @@ export default function SimulationEngine() {
       for (const block of blocks) {
         try {
           switch (block.type) {
-            case 'pid-controller':
-              await processPIDBlock(block, calculatePID, simulation, updateSimulationData);
+            case BlockTypes.PID_CONTROLLER:
+              await processPIDBlock(
+                block,
+                calculatePID,
+                simulation,
+                updateSimulationData
+              );
               break;
-            case 'transfer-function':
+            case BlockTypes.TRANSFER_FUNCTION:
               await processTransferFunctionBlock(
                 block,
                 calculateTransferFunction,
@@ -67,11 +73,21 @@ export default function SimulationEngine() {
                 updateSimulationData
               );
               break;
-            case 'step-input':
-              processStepInputBlock(block, timeRef.current, simulation, updateSimulationData);
+            case BlockTypes.STEP_INPUT:
+              processStepInputBlock(
+                block,
+                timeRef.current,
+                simulation,
+                updateSimulationData
+              );
               break;
-            case 'sine-wave':
-              processSineWaveBlock(block, timeRef.current, simulation, updateSimulationData);
+            case BlockTypes.SINE_WAVE:
+              processSineWaveBlock(
+                block,
+                timeRef.current,
+                simulation,
+                updateSimulationData
+              );
               break;
           }
         } catch (error) {
