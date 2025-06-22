@@ -5,13 +5,14 @@ import {
   getBlockTypeFromLabel,
   getPropertiesFromSubtitle,
 } from './block-utils.js';
+import { BlockTypes } from '../constants/blockTypes.js';
 
 // getSubtitleForTool tests
 describe('getSubtitleForTool', () => {
   it('returns defaults for known tools', () => {
-    assert.equal(getSubtitleForTool('pid-controller'), 'Kp=1, Ki=0.1, Kd=0.05');
-    assert.equal(getSubtitleForTool('transfer-function'), '1/(s+1)');
-    assert.equal(getSubtitleForTool('gain-block'), 'K=1.0');
+    assert.equal(getSubtitleForTool(BlockTypes.PID_CONTROLLER), 'Kp=1, Ki=0.1, Kd=0.05');
+    assert.equal(getSubtitleForTool(BlockTypes.TRANSFER_FUNCTION), '1/(s+1)');
+    assert.equal(getSubtitleForTool(BlockTypes.GAIN_BLOCK), 'K=1.0');
   });
 });
 

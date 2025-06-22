@@ -1,4 +1,5 @@
 import { useWorkbenchStore } from "@/store/workbench";
+import { BlockTypes } from "@/constants/blockTypes";
 
 export default function FormulaViewer() {
   const { blocks, connections } = useWorkbenchStore();
@@ -10,15 +11,15 @@ export default function FormulaViewer() {
     }
 
     // Find the main control loop
-    const pidBlock = blocks.find((block) => block.type === "pid-controller");
+    const pidBlock = blocks.find((block) => block.type === BlockTypes.PID_CONTROLLER);
     const plantBlock = blocks.find(
-      (block) => block.type === "transfer-function" || block.type === "plant-model",
+      (block) => block.type === BlockTypes.TRANSFER_FUNCTION || block.type === BlockTypes.PLANT_MODEL,
     );
-    const gainBlock = blocks.find((block) => block.type === "gain-block");
+    const gainBlock = blocks.find((block) => block.type === BlockTypes.GAIN_BLOCK);
     const inputBlock = blocks.find(
-      (block) => block.type === "step-input" || block.type === "sine-wave",
+      (block) => block.type === BlockTypes.STEP_INPUT || block.type === BlockTypes.SINE_WAVE,
     );
-    const sensorBlock = blocks.find((block) => block.type === "sensor");
+    const sensorBlock = blocks.find((block) => block.type === BlockTypes.SENSOR);
 
     if (pidBlock && plantBlock) {
       // Get actual PID parameters from block properties

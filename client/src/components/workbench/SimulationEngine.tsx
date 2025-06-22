@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react';
 import { useWorkbenchStore } from '@/store/workbench';
 import { useControlSystemWorker } from '@/hooks/useControlSystemWorker';
+import { BlockTypes } from '@/constants/blockTypes';
 import type { Block } from '@/types/block';
 
 export default function SimulationEngine() {
@@ -51,16 +52,16 @@ export default function SimulationEngine() {
       for (const block of blocks) {
         try {
           switch (block.type) {
-            case 'pid-controller':
+            case BlockTypes.PID_CONTROLLER:
               await processPIDBlock(block);
               break;
-            case 'transfer-function':
+            case BlockTypes.TRANSFER_FUNCTION:
               await processTransferFunctionBlock(block);
               break;
-            case 'step-input':
+            case BlockTypes.STEP_INPUT:
               processStepInputBlock(block);
               break;
-            case 'sine-wave':
+            case BlockTypes.SINE_WAVE:
               processSineWaveBlock(block);
               break;
           }

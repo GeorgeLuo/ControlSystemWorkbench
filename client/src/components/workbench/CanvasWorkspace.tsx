@@ -15,12 +15,12 @@ import ReactFlow, {
   Position,
 } from "reactflow";
 import { useWorkbenchStore } from "@/store/workbench";
+import { BlockTypes } from "@/constants/blockTypes";
 import {
   getSubtitleForTool,
   getBlockTypeFromLabel,
   getPropertiesFromSubtitle,
 } from "@/lib/block-utils";
-import type { BlockProperties } from "@/types/block";
 
 // Custom node component with standard control system symbols
 interface ControlBlockData {

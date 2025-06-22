@@ -1,17 +1,19 @@
+import { BlockTypes } from '@/constants/blockTypes';
+
 export function getSubtitleForTool(tool: string): string {
   switch (tool) {
-    case "pid-controller":
-      return "Kp=1, Ki=0.1, Kd=0.05";
-    case "transfer-function":
-      return "1/(s+1)";
-    case "gain-block":
-      return "K=1.0";
-    case "step-input":
-      return "Amp=1.0";
-    case "sine-wave":
-      return "f=1Hz";
+    case BlockTypes.PID_CONTROLLER:
+      return 'Kp=1, Ki=0.1, Kd=0.05';
+    case BlockTypes.TRANSFER_FUNCTION:
+      return '1/(s+1)';
+    case BlockTypes.GAIN_BLOCK:
+      return 'K=1.0';
+    case BlockTypes.STEP_INPUT:
+      return 'Amp=1.0';
+    case BlockTypes.SINE_WAVE:
+      return 'f=1Hz';
     default:
-      return "";
+      return '';
   }
 }
 

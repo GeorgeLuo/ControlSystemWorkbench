@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { generateId } from '@/lib/utils';
+import { BlockTypes } from '@/constants/blockTypes';
 import type { Block, BlockProperties } from '@/types/block';
 
 export interface Position {
@@ -279,15 +280,15 @@ export const useWorkbenchStore = create<WorkbenchState>((set, get) => ({
 
 function getDefaultProperties(type: string): BlockProperties {
   switch (type) {
-    case 'pid-controller':
+    case BlockTypes.PID_CONTROLLER:
       return { kp: 1.0, ki: 0.1, kd: 0.05, sampleTime: 0.01 };
-    case 'transfer-function':
+    case BlockTypes.TRANSFER_FUNCTION:
       return { numerator: [1], denominator: [1, 2, 1] };
-    case 'gain-block':
+    case BlockTypes.GAIN_BLOCK:
       return { gain: 1.0 };
-    case 'step-input':
+    case BlockTypes.STEP_INPUT:
       return { amplitude: 1.0, stepTime: 0.0 };
-    case 'sine-wave':
+    case BlockTypes.SINE_WAVE:
       return { amplitude: 1.0, frequency: 1.0, phase: 0.0 };
     default:
       return {};
