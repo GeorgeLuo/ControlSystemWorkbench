@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import { useWorkbenchStore } from '@/store/workbench';
 import { useControlSystemWorker } from '@/hooks/useControlSystemWorker';
 import { BlockTypes } from '@/constants/blockTypes';
+import type { Block } from '@/types/block';
 
 export default function SimulationEngine() {
   const { 
@@ -86,7 +87,7 @@ export default function SimulationEngine() {
     };
   }, [simulation.isRunning, blocks, simulation.sampleTime, simulation.duration]);
 
-  const processPIDBlock = async (block: any) => {
+  const processPIDBlock = async (block: Block) => {
     const { kp, ki, kd, sampleTime = 0.01 } = block.data.properties;
     
     // Get input from connected blocks (simplified)
@@ -107,7 +108,7 @@ export default function SimulationEngine() {
     updateSimulationData(block.id, [...currentData, result.output]);
   };
 
-  const processTransferFunctionBlock = async (block: any) => {
+  const processTransferFunctionBlock = async (block: Block) => {
     const { numerator, denominator } = block.data.properties;
     
     // Get input signal (simplified)
@@ -124,7 +125,7 @@ export default function SimulationEngine() {
     updateSimulationData(block.id, [...currentData, result[0] || 0]);
   };
 
-  const processStepInputBlock = (block: any) => {
+  const processStepInputBlock = (block: Block) => {
     const { amplitude, stepTime } = block.data.properties;
     const output = timeRef.current >= stepTime ? amplitude : 0;
     
@@ -132,7 +133,7 @@ export default function SimulationEngine() {
     updateSimulationData(block.id, [...currentData, output]);
   };
 
-  const processSineWaveBlock = (block: any) => {
+  const processSineWaveBlock = (block: Block) => {
     const { amplitude, frequency, phase } = block.data.properties;
     const output = amplitude * Math.sin(2 * Math.PI * frequency * timeRef.current + phase);
     
