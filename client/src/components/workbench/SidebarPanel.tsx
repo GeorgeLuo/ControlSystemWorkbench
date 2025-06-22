@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useWorkbenchStore } from '@/store/workbench';
+import { BlockTypes } from '@/constants/blockTypes';
 import { 
   Calculator, 
   Parentheses, 
@@ -21,16 +22,16 @@ const toolCategories = [
   {
     name: 'Control Blocks',
     tools: [
-      { id: 'pid-controller', name: 'PID Controller', icon: Calculator, color: 'text-primary bg-primary/10' },
-      { id: 'transfer-function', name: 'Transfer Parentheses', icon: Parentheses, color: 'text-green-600 bg-green-100' },
-      { id: 'gain-block', name: 'Gain Block', icon: ArrowRightLeft, color: 'text-purple-600 bg-purple-100' },
+      { id: BlockTypes.PID_CONTROLLER, name: 'PID Controller', icon: Calculator, color: 'text-primary bg-primary/10' },
+      { id: BlockTypes.TRANSFER_FUNCTION, name: 'Transfer Parentheses', icon: Parentheses, color: 'text-green-600 bg-green-100' },
+      { id: BlockTypes.GAIN_BLOCK, name: 'Gain Block', icon: ArrowRightLeft, color: 'text-purple-600 bg-purple-100' },
     ]
   },
   {
     name: 'Signal Sources',
     tools: [
-      { id: 'step-input', name: 'Step Input', icon: StepForward, color: 'text-orange-600 bg-orange-100' },
-      { id: 'sine-wave', name: 'Sine Wave', icon: Waves, color: 'text-red-600 bg-red-100' },
+      { id: BlockTypes.STEP_INPUT, name: 'Step Input', icon: StepForward, color: 'text-orange-600 bg-orange-100' },
+      { id: BlockTypes.SINE_WAVE, name: 'Sine Wave', icon: Waves, color: 'text-red-600 bg-red-100' },
     ]
   },
   {

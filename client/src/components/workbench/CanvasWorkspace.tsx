@@ -15,6 +15,7 @@ import ReactFlow, {
   Position,
 } from "reactflow";
 import { useWorkbenchStore } from "@/store/workbench";
+import { BlockTypes } from "@/constants/blockTypes";
 
 // Custom node component with standard control system symbols
 function ControlBlock({ data }: { data: any }) {
@@ -379,15 +380,15 @@ export default function CanvasWorkspace() {
 
 function getSubtitleForTool(tool: string): string {
   switch (tool) {
-    case "pid-controller":
+    case BlockTypes.PID_CONTROLLER:
       return "Kp=1, Ki=0.1, Kd=0.05";
-    case "transfer-function":
+    case BlockTypes.TRANSFER_FUNCTION:
       return "1/(s+1)";
-    case "gain-block":
+    case BlockTypes.GAIN_BLOCK:
       return "K=1.0";
-    case "step-input":
+    case BlockTypes.STEP_INPUT:
       return "Amp=1.0";
-    case "sine-wave":
+    case BlockTypes.SINE_WAVE:
       return "f=1Hz";
     default:
       return "";
