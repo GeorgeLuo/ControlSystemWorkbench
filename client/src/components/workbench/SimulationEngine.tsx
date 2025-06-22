@@ -112,7 +112,6 @@ export default function SimulationEngine() {
     };
   }, [simulation.isRunning, blocks, simulation.sampleTime, simulation.duration]);
 
-
   // This component doesn't render anything visible
   return null;
 }
