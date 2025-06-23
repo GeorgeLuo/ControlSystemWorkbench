@@ -98,46 +98,61 @@ function ControlBlock({ data }: { data: ControlBlockData }) {
     );
   };
 
-  const label = data.label.toLowerCase();
-  const isSensor = label.includes('sensor');
-
   return (
-    <div className="select-none">
-      {/* Input handle - left for most blocks, top for sensors */}
-      {!isSensor && (
-        <Handle
-          type="target"
-          position={Position.Left}
-          className="w-2 h-2 bg-primary border-0"
-        />
-      )}
-      
-      {isSensor && (
-        <Handle
-          type="target"
-          position={Position.Top}
-          className="w-2 h-2 bg-primary border-0"
-        />
-      )}
+    <div className="select-none relative">
+      {/* Handles on all 4 sides */}
+      <Handle
+        type="target"
+        position={Position.Left}
+        className="w-2 h-2 bg-primary border-0"
+        id="left"
+      />
+      <Handle
+        type="target"
+        position={Position.Top}
+        className="w-2 h-2 bg-primary border-0"
+        id="top"
+      />
+      <Handle
+        type="target"
+        position={Position.Right}
+        className="w-2 h-2 bg-primary border-0"
+        id="right"
+      />
+      <Handle
+        type="target"
+        position={Position.Bottom}
+        className="w-2 h-2 bg-primary border-0"
+        id="bottom"
+      />
+
+      {/* Source handles on all 4 sides */}
+      <Handle
+        type="source"
+        position={Position.Left}
+        className="w-2 h-2 bg-primary border-0"
+        id="left-out"
+      />
+      <Handle
+        type="source"
+        position={Position.Top}
+        className="w-2 h-2 bg-primary border-0"
+        id="top-out"
+      />
+      <Handle
+        type="source"
+        position={Position.Right}
+        className="w-2 h-2 bg-primary border-0"
+        id="right-out"
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        className="w-2 h-2 bg-primary border-0"
+        id="bottom-out"
+      />
 
       {getSymbol()}
-
-      {/* Output handle - right for most blocks, left for sensors */}
-      {!isSensor && (
-        <Handle
-          type="source"
-          position={Position.Right}
-          className="w-2 h-2 bg-primary border-0"
-        />
-      )}
-      
-      {isSensor && (
-        <Handle
-          type="source"
-          position={Position.Left}
-          className="w-2 h-2 bg-primary border-0"
-        />
-      )}
 
       {data.subtitle && (
         <div className="text-[8px] text-muted-foreground text-center mt-1 leading-tight max-w-20">
