@@ -161,14 +161,15 @@
 
 /* React Flow Overrides */
 .react-flow__node {
-  background-color: hsl(var(--card));
-  border: 2px solid hsl(var(--border));
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .react-flow__node.selected {
-  border-color: hsl(var(--primary));
+  background-color: transparent;
+  border: none;
 }
 
 .react-flow__handle {
