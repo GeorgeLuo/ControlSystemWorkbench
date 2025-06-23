@@ -34,7 +34,7 @@ function ControlBlock({ data }: { data: ControlBlockData }) {
 
     if (label.includes('pid')) {
       return (
-        <div className="w-16 h-12 border-2 border-foreground bg-background flex items-center justify-center">
+        <div className="w-16 h-12 border-2 border-foreground bg-white flex items-center justify-center">
           <div className="text-xs font-bold">PID</div>
         </div>
       );
@@ -42,7 +42,7 @@ function ControlBlock({ data }: { data: ControlBlockData }) {
 
     if (label.includes('plant') || label.includes('transfer')) {
       return (
-        <div className="w-20 h-12 border-2 border-foreground bg-background flex items-center justify-center">
+        <div className="w-20 h-12 border-2 border-foreground bg-white flex items-center justify-center">
           <div className="text-xs text-center">
             <div>G(s)</div>
           </div>
@@ -53,7 +53,7 @@ function ControlBlock({ data }: { data: ControlBlockData }) {
     if (label.includes('gain')) {
       return (
         <div className="w-12 h-12 flex items-center justify-center transform rotate-45">
-          <div className="w-full h-full border-2 border-foreground bg-background flex items-center justify-center">
+          <div className="w-full h-full border-2 border-foreground bg-white flex items-center justify-center">
             <div className="text-xs font-bold transform -rotate-45">K</div>
           </div>
         </div>
@@ -62,7 +62,7 @@ function ControlBlock({ data }: { data: ControlBlockData }) {
 
     if (label.includes('step')) {
       return (
-        <div className="w-16 h-12 flex items-center justify-center">
+        <div className="w-16 h-12 flex items-center justify-center bg-white border border-foreground">
           <svg width="48" height="36" viewBox="0 0 48 36" className="stroke-foreground fill-none stroke-2">
             <path d="M4 28 L4 18 L20 18 L20 8 L44 8" />
           </svg>
@@ -73,7 +73,7 @@ function ControlBlock({ data }: { data: ControlBlockData }) {
     if (label.includes('sensor')) {
       return (
         <div className="w-12 h-12 flex items-center justify-center">
-          <div className="w-full h-full border-2 border-foreground bg-background rounded-full flex items-center justify-center">
+          <div className="w-full h-full border-2 border-foreground bg-white rounded-full flex items-center justify-center">
             <div className="text-xs font-bold">H</div>
           </div>
         </div>
@@ -82,7 +82,7 @@ function ControlBlock({ data }: { data: ControlBlockData }) {
 
     if (label.includes('sine')) {
       return (
-        <div className="w-16 h-12 flex items-center justify-center">
+        <div className="w-16 h-12 flex items-center justify-center bg-white border border-foreground">
           <svg width="48" height="36" viewBox="0 0 48 36" className="stroke-foreground fill-none stroke-2">
             <path d="M4 18 Q12 8 20 18 T36 18 Q40 14 44 18" />
           </svg>
@@ -92,32 +92,45 @@ function ControlBlock({ data }: { data: ControlBlockData }) {
 
     // Default rectangular block
     return (
-      <div className="w-16 h-12 border-2 border-foreground bg-background flex items-center justify-center">
+      <div className="w-16 h-12 border-2 border-foreground bg-white flex items-center justify-center">
         <div className="text-xs text-center">{data.label}</div>
       </div>
     );
   };
 
-  const label = data.label.toLowerCase();
-  const isSensor = label.includes('sensor');
-
   return (
     <div className="select-none">
-      {!isSensor && (
-        <Handle
-          type="target"
-          position={Position.Left}
-          className="w-2 h-2 bg-primary border-0"
-        />
-      )}
+      {/* Top handle */}
+      <Handle
+        type="target"
+        position={Position.Top}
+        id="top"
+        className="w-2 h-2 bg-blue-500 border-0"
+      />
       
-      {isSensor && (
-        <Handle
-          type="target"
-          position={Position.Top}
-          className="w-2 h-2 bg-primary border-0"
-        />
-      )}
+      {/* Left handle */}
+      <Handle
+        type="target"
+        position={Position.Left}
+        id="left"
+        className="w-2 h-2 bg-blue-500 border-0"
+      />
+
+      {/* Right handle */}
+      <Handle
+        type="source"
+        position={Position.Right}
+        id="right"
+        className="w-2 h-2 bg-blue-500 border-0"
+      />
+      
+      {/* Bottom handle */}
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        id="bottom"
+        className="w-2 h-2 bg-blue-500 border-0"
+      />
 
       {getSymbol()}
 
@@ -125,22 +138,6 @@ function ControlBlock({ data }: { data: ControlBlockData }) {
         <div className="text-[8px] text-muted-foreground text-center mt-1 leading-tight max-w-20">
           {data.subtitle}
         </div>
-      )}
-
-      {!isSensor && (
-        <Handle
-          type="source"
-          position={Position.Right}
-          className="w-2 h-2 bg-primary border-0"
-        />
-      )}
-      
-      {isSensor && (
-        <Handle
-          type="source"
-          position={Position.Left}
-          className="w-2 h-2 bg-primary border-0"
-        />
       )}
     </div>
   );
