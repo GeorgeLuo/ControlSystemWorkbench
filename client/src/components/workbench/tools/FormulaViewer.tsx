@@ -4,9 +4,6 @@ import { BlockTypes } from "@/constants/blockTypes";
 export default function FormulaViewer() {
   const { blocks, connections } = useWorkbenchStore();
 
-  // Debug: log when connections change
-  console.log('FormulaViewer connections:', connections);
-
   // Generate formula representation based on connected blocks
   const generateFormula = () => {
     if (blocks.length === 0) {
