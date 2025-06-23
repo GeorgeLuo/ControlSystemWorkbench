@@ -352,6 +352,41 @@ export default function CanvasWorkspace() {
     [setEdges],
   );
 
+  const onEdgeUpdate = useCallback(
+    (oldEdge: Edge, newConnection: Connection) => {
+      setEdges((els) => {
+        // If the new connection doesn't have both source and target, remove the edge
+        if (!newConnection.source || !newConnection.target) {
+          return els.filter((edge) => edge.id !== oldEdge.id);
+        }
+        // Otherwise update the edge with new connection
+        return els.map((edge) => 
+          edge.id === oldEdge.id 
+            ? { ...edge, ...newConnection }
+            : edge
+        );
+      });
+    },
+    [setEdges],
+  );
+
+  const onEdgeUpdateStart = useCallback(() => {
+    // Optional: Add visual feedback when edge update starts
+  }, []);
+
+  const onEdgeUpdateEnd = useCallback(
+    (event: MouseEvent | TouchEvent, edge: Edge) => {
+      // Remove the edge if it's dropped without connecting to a valid target
+      const target = event.target as Element;
+      const isValidTarget = target.closest('.react-flow__handle');
+      
+      if (!isValidTarget) {
+        setEdges((eds) => eds.filter((e) => e.id !== edge.id));
+      }
+    },
+    [setEdges],
+  );
+
   // Sync ReactFlow state with workbench store
   useEffect(() => {
     // Convert ReactFlow nodes to workbench blocks
@@ -429,6 +464,9 @@ export default function CanvasWorkspace() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onEdgeUpdate={onEdgeUpdate}
+        onEdgeUpdateStart={onEdgeUpdateStart}
+        onEdgeUpdateEnd={onEdgeUpdateEnd}
         nodeTypes={nodeTypes}
         fitView
         attributionPosition="bottom-left"
