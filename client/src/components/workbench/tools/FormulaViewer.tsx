@@ -4,16 +4,20 @@ import { BlockTypes } from "@/constants/blockTypes";
 export default function FormulaViewer() {
   const { blocks, connections } = useWorkbenchStore();
 
-  // Debug: log when connections change
-  console.log('FormulaViewer connections:', connections);
-
   // Generate formula representation based on connected blocks
   const generateFormula = () => {
     if (blocks.length === 0) {
       return "No blocks in system";
     }
 
-    // Find the main control loop
+    if (connections.length === 0) {
+      const blockList = blocks
+        .map((block) => `${block.data?.label || block.type} (${block.id})`)
+        .join(", ");
+      return `Blocks present: ${blockList}. Connect them to form a control system.`;
+    }
+
+    // Find the main control loop blocks
     const pidBlock = blocks.find((block) => block.type === BlockTypes.PID_CONTROLLER);
     const plantBlock = blocks.find(
       (block) => block.type === BlockTypes.TRANSFER_FUNCTION || block.type === BlockTypes.PLANT_MODEL,
@@ -24,7 +28,18 @@ export default function FormulaViewer() {
     );
     const sensorBlock = blocks.find((block) => block.type === BlockTypes.SENSOR);
 
-    if (pidBlock && plantBlock) {
+    // Check if PID and plant are actually connected
+    const pidToPlantConnection = pidBlock && plantBlock && 
+      connections.some(conn => 
+        (conn.source === pidBlock.id && conn.target === plantBlock.id) ||
+        (conn.source === plantBlock.id && conn.target === pidBlock.id)
+      );
+
+    // Check for feedback loop (sensor connected back to summing junction)
+    const hasFeedbackLoop = sensorBlock && 
+      connections.some(conn => conn.source === sensorBlock.id);
+
+    if (pidBlock && plantBlock && pidToPlantConnection) {
       // Get actual PID parameters from block properties
       const kp = pidBlock.data?.properties?.kp || 1;
       const ki = pidBlock.data?.properties?.ki || 0.1;
@@ -40,15 +55,23 @@ export default function FormulaViewer() {
       ];
       const plantFormula = `\\frac{${numerator.join(" + ")}}{${denominator.join(" + ")}}`;
 
+      const systemType = hasFeedbackLoop ? "Closed Loop" : "Open Loop";
+      
       return {
         openLoop: `G_c(s) \\cdot G_p(s) = (${pidFormula}) \\cdot (${plantFormula})`,
-        closedLoop: `\\frac{G_c(s) \\cdot G_p(s)}{1 + G_c(s) \\cdot G_p(s)}`,
+        closedLoop: hasFeedbackLoop ? `\\frac{G_c(s) \\cdot G_p(s)}{1 + G_c(s) \\cdot G_p(s)}` : undefined,
         pid: `G_c(s) = ${pidFormula}`,
         plant: `G_p(s) = ${plantFormula}`,
+        systemType,
       };
     }
 
-    if (plantBlock) {
+    // Check if individual blocks have connections
+    const connectedBlocks = new Set(
+      connections.flatMap(conn => [conn.source, conn.target])
+    );
+
+    if (plantBlock && connectedBlocks.has(plantBlock.id)) {
       const numerator = plantBlock.data?.properties?.numerator || ["1"];
       const denominator = plantBlock.data?.properties?.denominator || [
         "s",
@@ -62,7 +85,7 @@ export default function FormulaViewer() {
       };
     }
 
-    if (gainBlock) {
+    if (gainBlock && connectedBlocks.has(gainBlock.id)) {
       const gain = gainBlock.data?.properties?.gain || 1;
       return {
         system: `G(s) = ${gain}`,
@@ -70,7 +93,7 @@ export default function FormulaViewer() {
       };
     }
 
-    // Show information about individual blocks if no system is formed
+    // Show information about individual blocks if no meaningful connections exist
     const blockList = blocks
       .map((block) => `${block.data?.label || block.type} (${block.id})`)
       .join(", ");
