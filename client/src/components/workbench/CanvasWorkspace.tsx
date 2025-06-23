@@ -348,8 +348,22 @@ export default function CanvasWorkspace() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const onConnect = useCallback(
-    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges],
+    (params: Connection) => setEdges((eds) => {
+      const updatedEdges = addEdge(params, eds);
+      
+      // Immediately sync to workbench store
+      const connections = updatedEdges.map((edge) => ({
+        id: edge.id,
+        source: edge.source,
+        target: edge.target,
+        sourceHandle: edge.sourceHandle || "output",
+        targetHandle: edge.targetHandle || "input",
+      }));
+      updateConnections(connections);
+      
+      return updatedEdges;
+    }),
+    [setEdges, updateConnections],
   );
 
   const onEdgeUpdate = useCallback(
