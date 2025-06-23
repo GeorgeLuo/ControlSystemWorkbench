@@ -1,20 +1,8 @@
 import { useWorkbenchStore } from "@/store/workbench";
 import { BlockTypes } from "@/constants/blockTypes";
-import { useReactFlow } from "reactflow";
 
 export default function FormulaViewer() {
-  const { blocks } = useWorkbenchStore();
-  const reactFlowInstance = useReactFlow();
-  
-  // Use current ReactFlow edges for real-time updates
-  const edges = reactFlowInstance.getEdges();
-  const connections = edges.map(edge => ({
-    id: edge.id,
-    source: edge.source,
-    target: edge.target,
-    sourceHandle: edge.sourceHandle || "output",
-    targetHandle: edge.targetHandle || "input",
-  }));
+  const { blocks, connections } = useWorkbenchStore();
 
   // Generate formula representation based on connected blocks
   const generateFormula = () => {

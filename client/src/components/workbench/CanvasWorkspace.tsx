@@ -355,19 +355,28 @@ export default function CanvasWorkspace() {
   const onEdgeUpdate = useCallback(
     (oldEdge: Edge, newConnection: Connection) => {
       setEdges((els) => {
-        // If the new connection doesn't have both source and target, remove the edge
-        if (!newConnection.source || !newConnection.target) {
-          return els.filter((edge) => edge.id !== oldEdge.id);
-        }
-        // Otherwise update the edge with new connection
-        return els.map((edge) => 
-          edge.id === oldEdge.id 
-            ? { ...edge, ...newConnection }
-            : edge
-        );
+        const updatedEdges = !newConnection.source || !newConnection.target
+          ? els.filter((edge) => edge.id !== oldEdge.id)
+          : els.map((edge) => 
+              edge.id === oldEdge.id 
+                ? { ...edge, ...newConnection }
+                : edge
+            );
+        
+        // Immediately sync to workbench store
+        const connections = updatedEdges.map((edge) => ({
+          id: edge.id,
+          source: edge.source,
+          target: edge.target,
+          sourceHandle: edge.sourceHandle || "output",
+          targetHandle: edge.targetHandle || "input",
+        }));
+        updateConnections(connections);
+        
+        return updatedEdges;
       });
     },
-    [setEdges],
+    [setEdges, updateConnections],
   );
 
   const onEdgeUpdateStart = useCallback(() => {
@@ -381,10 +390,24 @@ export default function CanvasWorkspace() {
       const isValidTarget = target.closest('.react-flow__handle');
       
       if (!isValidTarget) {
-        setEdges((eds) => eds.filter((e) => e.id !== edge.id));
+        setEdges((eds) => {
+          const updatedEdges = eds.filter((e) => e.id !== edge.id);
+          
+          // Immediately sync to workbench store
+          const connections = updatedEdges.map((edge) => ({
+            id: edge.id,
+            source: edge.source,
+            target: edge.target,
+            sourceHandle: edge.sourceHandle || "output",
+            targetHandle: edge.targetHandle || "input",
+          }));
+          updateConnections(connections);
+          
+          return updatedEdges;
+        });
       }
     },
-    [setEdges],
+    [setEdges, updateConnections],
   );
 
   // Sync ReactFlow state with workbench store
